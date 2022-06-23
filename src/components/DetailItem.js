@@ -9,6 +9,10 @@ import {
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, icons, SIZES } from "../../constants";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 function renderHeader() {
   return (
@@ -16,26 +20,28 @@ function renderHeader() {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: SIZES.padding,
-        marginTop: SIZES.base,
+        paddingHorizontal: wp(SIZES.padding / 4),
+        marginTop: hp(1),
       }}
     >
       <TouchableOpacity
-        hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
+        hitSlop={{ top: hp(4), bottom: hp(4), left: wp(4), right: wp(4) }}
         onPress={() => console.log("aaa")}
       >
         <Image
           source={icons.menu}
-          style={{ width: 25, height: 25, tintColor: COLORS.white }}
+          resizeMode="contain"
+          style={{ width: wp(6), height: hp(6), tintColor: COLORS.white }}
         />
       </TouchableOpacity>
       <TouchableOpacity
-        hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
+        hitSlop={{ top: hp(4), bottom: hp(4), left: wp(4), right: wp(4) }}
         onPress={() => console.log("aaa")}
       >
         <Image
           source={icons.search}
-          style={{ width: 25, height: 25, tintColor: COLORS.white }}
+          resizeMode="contain"
+          style={{ width: wp(6), height: hp(6), tintColor: COLORS.white }}
         />
       </TouchableOpacity>
     </View>
@@ -50,33 +56,34 @@ export default function DetailItem({ route, navigation }) {
       <View
         style={{
           backgroundColor: COLORS.white,
-          height: 60,
+          height: hp(10),
           flexDirection: "row",
           justifyContent: "space-evenly",
           alignItems: "center",
           borderRadius: SIZES.padding * 2,
-          width: "90%",
+          width: wp("90%"),
         }}
       >
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Home");
           }}
-          hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
+          hitSlop={{ top: hp(4), bottom: hp(4), left: wp(4), right: wp(4) }}
         >
           <Image
             source={icons.dashboard}
-            style={{ width: 25, height: 25, tintColor: COLORS.darkGray }}
+            style={{ width: wp(7), height: hp(4), tintColor: COLORS.darkGray }}
           />
         </TouchableOpacity>
         <TouchableOpacity
-          hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
+          hitSlop={{ top: hp(4), bottom: hp(4), left: wp(4), right: wp(4) }}
         >
           <View
             style={[
               {
                 backgroundColor: COLORS.primary,
-                padding: SIZES.font,
+                paddingHorizontal: wp(SIZES.base / 2),
+                paddingVertical: wp(SIZES.base / 2.5),
                 borderRadius: SIZES.font,
               },
               styles.shadow,
@@ -84,16 +91,16 @@ export default function DetailItem({ route, navigation }) {
           >
             <Image
               source={icons.plus}
-              style={{ width: 16, height: 16, tintColor: COLORS.white }}
+              style={{ width: wp(6), height: hp(4), tintColor: COLORS.white }}
             />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          hitSlop={{ top: 20, bottom: 20, left: 30, right: 30 }}
+          hitSlop={{ top: hp(3), bottom: hp(3), left: wp(3), right: wp(3) }}
         >
           <Image
             source={icons.user}
-            style={{ width: 25, height: 25, tintColor: COLORS.darkGray }}
+            style={{ width: wp(6), height: hp(4), tintColor: COLORS.darkGray }}
           />
         </TouchableOpacity>
       </View>
@@ -102,10 +109,14 @@ export default function DetailItem({ route, navigation }) {
 
   function renderProductName() {
     return (
-      <View>
+      <View style={{width: wp(50)}}>
         <Text style={{ ...FONTS.body3, color: COLORS.white }}>Furniture</Text>
         <Text
-          style={{ ...FONTS.h1, color: COLORS.white, marginTop: SIZES.base }}
+          style={{
+            ...FONTS.h1,
+            color: COLORS.white,
+            marginTop: hp(SIZES.base / 4),
+          }}
         >
           {item.productName}
         </Text>
@@ -118,19 +129,19 @@ export default function DetailItem({ route, navigation }) {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View
           style={{
-            width: 60,
-            height: 60,
+            width: wp(10),
+            height: wp(10),
             justifyContent: "center",
             alignItems: "center",
-            borderRadius: 60,
+            borderRadius: wp(10),
             backgroundColor: COLORS.transparentLightGray1,
-            marginRight: SIZES.base * 3,
+            marginRight: wp(SIZES.base),
           }}
         >
           <View
             style={{
-              width: 10,
-              height: 10,
+              width: wp(2),
+              height: wp(2),
               backgroundColor: COLORS.blue,
               borderRadius: 10,
             }}
@@ -139,11 +150,11 @@ export default function DetailItem({ route, navigation }) {
         <View
           style={{
             backgroundColor: COLORS.transparentLightGray1,
-            paddingHorizontal: SIZES.padding,
-            paddingVertical: SIZES.padding,
+            paddingHorizontal: wp(SIZES.base / 2),
+            paddingVertical: hp(SIZES.base / 4),
             borderRadius: SIZES.font,
             flexDirection: "row",
-            width: 200,
+            width: wp(50),
           }}
         >
           <View style={{ flex: 1 }}>
@@ -162,14 +173,14 @@ export default function DetailItem({ route, navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground style={{ height: "100%" }} source={item.image}>
+      <ImageBackground style={{ height: hp("100%") }} source={item.image}>
         {renderHeader()}
         <View
           style={{
             position: "absolute",
-            bottom: "50%",
-            width: "100%",
-            left: "20%",
+            bottom: hp("50%"),
+            width: wp("100%"),
+            left: wp("26%"),
             justifyContent: "flex-end",
           }}
         >
@@ -178,10 +189,9 @@ export default function DetailItem({ route, navigation }) {
         <View
           style={{
             position: "absolute",
-            bottom: "16%",
-            width: "100%",
-
-            paddingHorizontal: SIZES.padding,
+            bottom: hp("20%"),
+            width: wp("100%"),
+            paddingHorizontal: wp(SIZES.padding / 4),
           }}
         >
           {renderProductName()}
@@ -189,8 +199,8 @@ export default function DetailItem({ route, navigation }) {
         <View
           style={{
             position: "absolute",
-            bottom: "4%",
-            width: "100%",
+            bottom: hp("4%"),
+            width: wp("100%"),
             alignItems: "center",
           }}
         >

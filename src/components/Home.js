@@ -1,7 +1,6 @@
 import {
   FlatList,
   Image,
-  ImageBackground,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -11,6 +10,10 @@ import {
 import React, { useState } from "react";
 import { COLORS, FONTS, icons, images, SIZES } from "../../constants";
 import { selectedTabData, tabListData } from "../../data";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 function renderHeader() {
   return (
@@ -18,22 +21,29 @@ function renderHeader() {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: SIZES.padding,
-        paddingTop: SIZES.base,
+        paddingHorizontal: wp(SIZES.padding / 4),
+        paddingTop: hp(1),
+        alignItems: "center",
       }}
     >
-      <TouchableOpacity onPress={() => console.log("pressed")}>
+      <TouchableOpacity
+        hitSlop={{ top: hp(4), bottom: hp(4), left: wp(4), right: wp(4) }}
+        onPress={() => console.log("pressed")}
+      >
         <Image
           source={icons.menu}
           resizeMode="contain"
-          style={{ width: 25, height: 25 }}
+          style={{ width: wp(6), height: hp(6) }}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => console.log("pressed")}>
+      <TouchableOpacity
+        hitSlop={{ top: hp(6), bottom: hp(6), left: wp(4), right: wp(4) }}
+        onPress={() => console.log("pressed")}
+      >
         <Image
           source={icons.cart}
           resizeMode="contain"
-          style={{ width: 25, height: 25 }}
+          style={{ width: wp(6), height: wp(6) }}
         />
       </TouchableOpacity>
     </View>
@@ -49,8 +59,8 @@ function AddToCart() {
           flexDirection: "row",
           backgroundColor: COLORS.white,
           borderRadius: SIZES.padding,
-          paddingHorizontal: SIZES.radius,
-          paddingVertical: SIZES.base,
+          paddingHorizontal: wp(2),
+          paddingVertical: hp(1),
         },
         styles.shadow,
       ]}
@@ -58,13 +68,17 @@ function AddToCart() {
       <View
         style={{
           backgroundColor: COLORS.lightGray2,
-          width: 50,
+          width: wp(16),
           borderRadius: SIZES.radius,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Image source={images.sofa} resizeMode="contain" style={{ width: '60%', height: '60%' }} />
+        <Image
+          source={images.sofa}
+          resizeMode="contain"
+          style={{ width: "60%", height: "60%" }}
+        />
       </View>
       <View style={{ justifyContent: "center", marginLeft: SIZES.radius }}>
         <Text style={{ ...FONTS.h3 }}>Special offer</Text>
@@ -72,25 +86,23 @@ function AddToCart() {
           Adding to your cart
         </Text>
       </View>
-      <View style={{ flex: 1, alignItems: 'flex-end'}}>
+      <View style={{ flex: 1, alignItems: "flex-end" }}>
         <TouchableOpacity
           style={{
             backgroundColor: COLORS.primary,
-            borderRadius: SIZES.base,
+            borderRadius: wp(SIZES.base / 3),
             justifyContent: "center",
             alignItems: "center",
-            paddingHorizontal: SIZES.radius,
-            marginVertical: SIZES.base,
-            marginRight: SIZES.padding,
-            width: 40,
-            height: 60,
-
+            marginVertical: hp(1),
+            marginRight: wp(6),
+            width: wp(10),
+            height: hp(8),
           }}
         >
           <Image
             source={icons.chevron}
             resizeMode="contain"
-            style={{ width: 14, height: 14 }}
+            style={{ width: wp(4), height: hp(4) }}
           />
         </TouchableOpacity>
       </View>
@@ -98,7 +110,7 @@ function AddToCart() {
   );
 }
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [selectedTab, setSelectedTab] = useState(selectedTabData);
 
   function renderTabList() {
@@ -118,7 +130,10 @@ export default function Home({navigation}) {
   function renderTabItem({ item }) {
     return (
       <TouchableOpacity
-        style={{ marginHorizontal: SIZES.padding, alignItems: "center" }}
+        style={{
+          marginHorizontal: wp(SIZES.padding / 4),
+          alignItems: "center",
+        }}
         onPress={() => {
           setSelectedTab(item);
         }}
@@ -129,12 +144,12 @@ export default function Home({navigation}) {
         {item.id === selectedTab.id && (
           <View
             style={{
-              width: 8,
-              height: 8,
+              width: wp(2),
+              height: wp(2),
               borderRadius: 20,
               backgroundColor: COLORS.blue,
               justifyContent: "center",
-              marginTop: SIZES.base,
+              marginTop: hp(1),
             }}
           ></View>
         )}
@@ -160,16 +175,16 @@ export default function Home({navigation}) {
     return (
       <TouchableOpacity
         style={{
-          marginLeft: SIZES.padding,
-          height: SIZES.height / 2,
+          marginLeft: wp(SIZES.padding / 4),
+          height: hp(49),
         }}
         onPress={() => {
-          navigation.navigate('DetailItem', {
-            item
-          })
+          navigation.navigate("DetailItem", {
+            item,
+          });
         }}
       >
-        <View style={{ width: SIZES.width / 2 }}>
+        <View style={{ width: wp(50), flex: 1 }}>
           <Image
             source={item.image}
             resizeMode="stretch"
@@ -182,9 +197,9 @@ export default function Home({navigation}) {
           <View
             style={{
               position: "absolute",
-              top: 15,
-              left: "10%",
-              right: "10%",
+              top: hp(2),
+              left: wp("4%"),
+              right: wp("4%"),
             }}
           >
             <Text style={{ ...FONTS.body3, color: COLORS.lightGray2 }}>
@@ -197,11 +212,11 @@ export default function Home({navigation}) {
           <View
             style={{
               position: "absolute",
-              bottom: 15,
-              left: "10%",
+              bottom: hp(2),
+              left: wp("4%"),
               backgroundColor: COLORS.transparentLightGray1,
-              paddingHorizontal: SIZES.base * 2,
-              paddingVertical: SIZES.base,
+              paddingHorizontal: wp(SIZES.base / 2),
+              paddingVertical: hp(1),
               borderRadius: SIZES.radius,
             }}
           >
@@ -221,8 +236,8 @@ export default function Home({navigation}) {
         style={{
           ...FONTS.largeTitle,
           color: COLORS.black,
-          marginHorizontal: SIZES.padding,
-          marginVertical: SIZES.base,
+          marginHorizontal: wp(SIZES.padding / 4),
+          marginVertical: hp(1),
         }}
       >
         Collection of chairs
@@ -232,8 +247,8 @@ export default function Home({navigation}) {
       <View
         style={{
           flexGrow: 1,
-          paddingHorizontal: SIZES.padding,
-          paddingVertical: SIZES.padding,
+          paddingHorizontal: wp(SIZES.base),
+          paddingVertical: hp(3),
         }}
       >
         <AddToCart />
